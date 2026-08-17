@@ -216,37 +216,20 @@ public class ChessBoard : MonoBehaviour, IBoard
             if ((m_Turn % 2 == 0 && piece is WhiteChessPiece) || (m_Turn % 2 == 1 && piece is BlackChessPiece))
             {
                 piece.StyleSelected();
-                var generatedMoves = piece.GenerateMoves(this);
-                if (piece is WhiteChessPiece)
+                if (m_Checked)
                 {
-                    
+                    m_PossibleMoves = new();
+                    var generatedMoves = piece.GenerateMoves(this);
+                    foreach (var move in generatedMoves)
+                    {
+                        if (move is Capture capture && capture.Captures(m_CheckingPiece))
+                            m_PossibleMoves.Add(move);
+                        else if (move.SimulateApplied(this).DoesNotCheck(m_CheckingPiece))
+                            m_PossibleMoves.Add(move);
+                    }
                 }
-                if (piece is BlackChessPiece)
-                {
-                    
-                }
-                // if (m_Checked)
-                // {
-                //     m_PossibleMoves = new();
-                //     var generatedMoves = piece.GenerateMoves(this);
-                //     foreach (var move in generatedMoves)
-                //     {
-                //         if (move is Capture capture && capture.Captures(m_CheckingPiece))
-                //             m_PossibleMoves.Add(move);
-                //         else
-                //         {
-                //             var tempBoard = move.SimulateApplied(this);
-                //             if (tempBoard.TestCheck(m_CheckingPiece))
-                //             {
-                //                 m_PossibleMoves.Add(move);
-                //             }
-                //         }
-                //     }
-                // }
-                // else
-                // {
-                //     m_PossibleMoves = piece.GenerateMoves(this);
-                // }
+                else
+                    m_PossibleMoves = piece.GenerateMoves(this);
                 m_CurrentSelection = piece;
                 m_PossibleMoves.ForEach(move => move.Show());
             }

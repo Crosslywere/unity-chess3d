@@ -35,9 +35,7 @@ public class Move
 [Serializable]
 public class Capture : Move
 {
-#pragma warning disable IDE1006 // Naming Styles
     protected ChessPiece target { get; }
-#pragma warning restore IDE1006 // Naming Styles
 
     public Capture(ChessPiece self, Tile tile, ChessPiece target) : base(self, tile)
     {
@@ -76,13 +74,9 @@ public class Capture : Move
 [Serializable]
 public class Castling : Move
 {
-#pragma warning disable IDE1006 // Naming Styles
     protected ChessPiece castle { get; }
-#pragma warning restore IDE1006 // Naming Styles
 
-#pragma warning disable IDE1006 // Naming Styles
     protected Tile castleTile { get; }
-#pragma warning restore IDE1006 // Naming Styles
     
     public Castling(ChessPiece self, Tile tile, ChessPiece castle, Tile castleTile) : base(self, tile)
     {
@@ -109,7 +103,7 @@ public class Castling : Move
         castleTile.DefaultStyle();
     }
 
-    public override bool IsTile(Tile tile) => this.tile.position == tile.position || castleTile.position == tile.position;
+    public override bool IsTile(Tile tile) => this.tile.position == tile.position || castleTile.position == tile.position || castle.position == tile.position;
 }
 
 public class EnPassant : Capture

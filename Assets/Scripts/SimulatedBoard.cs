@@ -52,7 +52,7 @@ public class SimulatedBoard : IBoard
         throw new System.UnauthorizedAccessException();
     }
 
-    public bool TestCheck(ChessPiece checkingPiece)
+    public bool DoesNotCheck(ChessPiece checkingPiece)
     {
         return checkingPiece.GenerateMoves(this).Find(move => move is Capture capture && capture.IsCaptureKing()) == null;
     }
