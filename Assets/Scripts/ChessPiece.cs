@@ -94,7 +94,7 @@ public abstract class ChessPiece : MonoBehaviour
         {
             m_Epsilon += Time.deltaTime;
             var t = Mathf.Clamp01(m_Epsilon / ANIMATION_TIME);
-            gameObject.transform.localScale = Vector3.Lerp(gameObject.transform.localScale, Vector3.zero, t * t * (3 - 2 * t) / 2);
+            gameObject.transform.localScale = Vector3.Lerp(new(0.8f, 0.8f, 0.8f), Vector3.zero, Mathf.SmoothStep(0, 1, t * t * (3 - 2 * t)));
             gameObject.transform.localEulerAngles = Vector3.down * 180f * t;
             if (t >= 1)
             {
@@ -108,7 +108,7 @@ public abstract class ChessPiece : MonoBehaviour
         {
             m_Epsilon += Time.deltaTime;
             var t = Mathf.Clamp01(m_Epsilon / ANIMATION_TIME);
-            var pos = gameObject.transform.localPosition = Vector3.Lerp(m_FromPosition, Vector3.zero, t * t * (3 - 2 * t));
+            var pos = gameObject.transform.localPosition = Vector3.Lerp(m_FromPosition, Vector3.zero, Mathf.SmoothStep(0, 1, t * t * (3 - 2 * t)));
             gameObject.transform.localPosition = new(pos.x, Mathf.Sin(Mathf.PI * t), pos.z);
             if (t >= 1)
             {
