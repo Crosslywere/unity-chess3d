@@ -73,6 +73,10 @@ public class ChessBoard : MonoBehaviour, IBoard
         m_QuitEventKey.action.Disable();
     }
 
+    /// <summary>
+    /// Instantiates an 8x8 grd of tiles
+    /// </summary>
+    /// <returns>The array of 64 tiles instantiated</returns>
     Tile[] SpawnTiles()
     {
         Tile[] tiles = new Tile[64];
@@ -85,6 +89,9 @@ public class ChessBoard : MonoBehaviour, IBoard
         return tiles;
     }
 
+    /// <summary>
+    /// Creates the chess pieces in all the appropriate positions. Should be called after SpawnTiles
+    /// </summary>
     void SpawnPieces()
     {
         if (m_WhiteChessPieces == null)
@@ -153,6 +160,10 @@ public class ChessBoard : MonoBehaviour, IBoard
         m_BlackChessPieces.ForEach(piece => piece.DefaultStyle());
     }
 
+    /// <summary>
+    /// Removes the chess piece from the list of chess pieces
+    /// </summary>
+    /// <param name="piece">The chess piece to remove</param>
     public void Remove(ChessPiece piece)
     {
         if (piece is WhiteChessPiece wp)
@@ -161,6 +172,12 @@ public class ChessBoard : MonoBehaviour, IBoard
             m_BlackChessPieces.Remove(bp);
     }
 
+    /// <summary>
+    /// Checks if there is a chess piece existing at the position
+    /// </summary>
+    /// <param name="position">A Vector2Int representing the position to check</param>
+    /// <param name="piece">The piece at that position</param>
+    /// <returns>true if a piece exists at the board position, false otherwise</returns>
     public bool DoesPieceExist(Vector2Int position, out ChessPiece piece)
     {
         piece = null;
@@ -183,6 +200,11 @@ public class ChessBoard : MonoBehaviour, IBoard
         return false;
     }
 
+    /// <summary>
+    /// Checks if there is a chess piece existing at the position
+    /// </summary>
+    /// <param name="position">A Vector2Int representing the position to check</param>
+    /// <returns>true if a piece exists at the board position, false otherwise</returns>
     public bool DoesPieceExist(Vector2Int position)
     {
         foreach (var cp in m_WhiteChessPieces)
@@ -198,6 +220,11 @@ public class ChessBoard : MonoBehaviour, IBoard
         return false;
     }
 
+    /// <summary>
+    /// Gets the tile at a Vector2Int position
+    /// </summary>
+    /// <param name="position">The position of the tile</param>
+    /// <returns>The tile at that position</returns>
     public Tile TileAt(Vector2Int position)
     {
         if (position.x >= 0 && position.x < 8 && position.y >= 0 && position.y < 8)
@@ -206,8 +233,17 @@ public class ChessBoard : MonoBehaviour, IBoard
         return null;
     }
 
+    /// <summary>
+    /// Checks if the chess piece just moved
+    /// </summary>
+    /// <param name="chessPiece">The chess piece to check if has just moved</param>
+    /// <returns></returns>
     public bool JustMoved(ChessPiece chessPiece) => chessPiece.turnMoved == m_Turn - 1;
 
+    /// <summary>
+    /// Selects the chess piece at the clicked on board position
+    /// </summary>
+    /// <param name="hitInfo">The Physics.RayCast out RaycastHit result</param>
     public void SelectChessPiece(RaycastHit hitInfo)
     {
         var tile = hitInfo.collider.GetComponentInParent<Tile>();
@@ -236,6 +272,10 @@ public class ChessBoard : MonoBehaviour, IBoard
         }
     }
 
+    /// <summary>
+    /// Moves the currently selected chess piece to clicked position and then deselects
+    /// </summary>
+    /// <param name="hitInfo">The Physics.RayCast out RaycastHit result</param>
     public void MoveAndDeselect(RaycastHit hitInfo)
     {
         var tile = hitInfo.collider.GetComponentInParent<Tile>();
@@ -251,6 +291,9 @@ public class ChessBoard : MonoBehaviour, IBoard
         Deselect();
     }
 
+    /// <summary>
+    /// Deselects the currently selected chess piece
+    /// </summary>
     void Deselect()
     {
         m_Promotion = (m_CurrentSelection is WhiteChessPiece wp && wp.type.pieceType == ChessPieceType.Type.Pawn && wp.position.y == 7) ||
