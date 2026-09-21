@@ -119,4 +119,12 @@ public abstract class ChessPiece : MonoBehaviour
         if (m_IsSelected)
             gameObject.transform.localEulerAngles += Vector3.down * 90f * Time.deltaTime;
     }
+
+    public string GetPosString()
+    {
+        var tile = GetComponentInParent<Tile>();
+        if (tile != null)
+            return tile.GetPosString();
+        return "";
+    }
 }

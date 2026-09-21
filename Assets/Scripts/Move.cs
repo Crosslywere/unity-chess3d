@@ -30,6 +30,11 @@ public class Move
     {
         return new(board, this);
     }
+
+    public virtual string ApplyMessage()
+    {
+        return "mov:" + self.GetPosString() + "->" + tile.GetPosString();
+    }
 }
 
 [Serializable]
@@ -69,6 +74,11 @@ public class Capture : Move
     {
         return this.target.position == target.position;
     }
+
+    public override string ApplyMessage()
+    {
+        return "cap:" + target.GetPosString() + "|" + base.ApplyMessage();
+    }
 }
 
 [Serializable]
@@ -104,6 +114,11 @@ public class Castling : Move
     }
 
     public override bool IsTile(Tile tile) => this.tile.position == tile.position || castleTile.position == tile.position || castle.position == tile.position;
+
+    public override string ApplyMessage()
+    {
+        return "cas-mov:" + castle.GetPosString() + "->" + castleTile.GetPosString() + "-" + self.GetPosString() + "->" + tile.GetPosString();
+    }
 }
 
 public class EnPassant : Capture

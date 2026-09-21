@@ -42,4 +42,9 @@ public class Tile : MonoBehaviour
     {
         m_Renderer.material.color = (position.x + position.y) % 2 == 1 ? Color.skyBlue : Color.blue;
     }
+
+    public string GetPosString()
+    {
+        return $"({(char)(m_Position.x + 'A')},{(char)(m_Position.y + '1')})";
+    }
 }
