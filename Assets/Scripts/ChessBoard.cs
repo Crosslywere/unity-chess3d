@@ -47,8 +47,8 @@ public class ChessBoard : MonoBehaviour, IBoard
     private bool m_Promotion;
 
     [Header("Miscellanious")]
-
     private Vector3 m_LastRotation;
+
     private bool m_Selectable = true;
 
     private bool m_SwitchingSides;
@@ -204,7 +204,7 @@ public class ChessBoard : MonoBehaviour, IBoard
     /// Checks if there is a chess piece existing at the position
     /// </summary>
     /// <param name="position">A Vector2Int representing the position to check</param>
-    /// <returns>true if a piece exists at the board position, false otherwise</returns>
+    /// <returns>true if a piece exists at the board position, false otherwise</returns>m_CheckedText
     public bool DoesPieceExist(Vector2Int position)
     {
         foreach (var cp in m_WhiteChessPieces)
@@ -224,7 +224,7 @@ public class ChessBoard : MonoBehaviour, IBoard
     /// Gets the tile at a Vector2Int position
     /// </summary>
     /// <param name="position">The position of the tile</param>
-    /// <returns>The tile at that position</returns>
+    /// <returns>The tile at that position</returns>m_CheckedText
     public Tile TileAt(Vector2Int position)
     {
         if (position.x >= 0 && position.x < 8 && position.y >= 0 && position.y < 8)
@@ -241,7 +241,7 @@ public class ChessBoard : MonoBehaviour, IBoard
     public bool JustMoved(ChessPiece chessPiece) => chessPiece.turnMoved == m_Turn - 1;
 
     /// <summary>
-    /// Selects the chess piece at the clicked on board position
+    /// Selects the chess piece clicked on/at the board position and colors the possible moves.
     /// </summary>
     /// <param name="hitInfo">The Physics.RayCast out RaycastHit result</param>
     public void SelectChessPiece(RaycastHit hitInfo)
@@ -363,6 +363,11 @@ public class ChessBoard : MonoBehaviour, IBoard
     }
 
 #endregion
+
+    public void GameOver()
+    {
+        
+    }
 
     void Start()
     {
